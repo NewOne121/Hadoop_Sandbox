@@ -2,15 +2,19 @@
 
 #Check is we are using correct context
 MYCONTEXT='kubernetes-admin@kubernetes'
-CURRENT_CONTEXT=$(kubectl config current-context)
 
+getcontext(){
+CURRENT_CONTEXT=$(kubectl config current-context)
+}
+
+getcontext
 if [[ "$CURRENT_CONTEXT" != "$MYCONTEXT" ]];
   then
     echo -e "We are currently using context: "$CURRENT_CONTEXT"\
     which may cause catastrophic consequences.\n\
     Attempting to switch context..."
     kubectl config use-context "$MYCONTEXT"
-    CURRENT_CONTEXT=$(kubectl config current-context)
+    getcontext
     echo -e "Current context is: "$CURRENT_CONTEXT"\n\
     Continue?"
     read AMSURE
