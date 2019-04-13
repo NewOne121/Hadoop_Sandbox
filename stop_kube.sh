@@ -1,5 +1,11 @@
 #!/bin/bash
 
+###TODO
+#Add start/restart
+#Like
+#$1=action
+#case $action in:...setvar
+
 #Check is we are using correct context
 MYCONTEXT='kubernetes-admin@kubernetes'
 
