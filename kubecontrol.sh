@@ -1,11 +1,5 @@
 #!/bin/bash
 
-###TODO
-#Add start/restart
-#Like
-#$1=action
-#case $action in:...setvar
-
 case $1 in
   "")
     ACTION="stop"
