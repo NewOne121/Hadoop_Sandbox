@@ -1,10 +1,6 @@
 #!/bin/bash
 
 case $1 in
-  *)
-    echo "You must specify an action. Valid actions are: start,stop,restart"
-    exit 0
-    ;;
   stop)
     ACTION="stop"
     KUBELET_EXPECTED_STATE="running"
@@ -25,6 +21,10 @@ case $1 in
     KUBELET_DESIRED_STATE="running"
     DOCKER_EXPECTED_STATE=".*"
     DOCKER_DESIRED_STATE="running"
+    ;;
+  *)
+    echo "You must specify an action. Valid actions are: start,stop,restart"
+    exit 0
     ;;
 esac
 
