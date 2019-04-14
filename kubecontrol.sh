@@ -1,7 +1,11 @@
 #!/bin/bash
 
 case $1 in
-  "")
+  *)
+    echo "You must specify an action. Valid actions are: start,stop,restart"
+    exit 0
+    ;;
+  stop)
     ACTION="stop"
     KUBELET_EXPECTED_STATE="running"
     KUBELET_DESIRED_STATE="dead"
