@@ -47,11 +47,11 @@ bashrcVar = 'source ' + homeDir + '/.bashrc'
 def setjava():
   with open(bashProfile, "a+") as bashpr:
     bashpr.write(javaVar)
-    print 'Java home is set.'
+    print 'Java home has been set.'
 
 #Check if JAVA_HOME is already set
 isvar='0'
-files = [ bashRc, bashProfile, etcProfile ]
+files = [ bashProfile, etcProfile ]
 for file in files:
   with open(file, 'r') as bashfile:
     for line in bashfile:
@@ -74,22 +74,23 @@ def extractHadoop():
   tar.close()
 
 def deployHadoopConfig(role): #from args
-  hadoopConfDir = '/opt/hadoop-' + hadoopVersion '/etc/hadoop'
+  hadoopConfDir = '/opt/hadoop-' + hadoopVersion + '/etc/hadoop'
   commConfDir = './config/common/'
   roleConfDir = './config/' + role + '/'
   for item in commConfDir,roleConfDir:
     for root, dirs, files in os.walk(item):
-      files.remove('hosts')
-      HadoopConf = files
+      if 'hosts' in files:
+        files.remove('hosts')
+        HadoopConf = files
     for conf in HadoopConf:
-      exec_shell('cp', '\'' + commConfDir + conf + '\'', hadoopConfDir)
-  exec_shell(['cp', './config/common/hosts', '/etc/hosts'])
+      subprocess.Popen(['cp', commConfDir + conf, hadoopConfDir])
+  subprocess.Popen(['cp', './config/common/hosts', '/etc/hosts'])
     
 
 install_packages()
 if isvar == '0': setjava()
 getHadoop()
 extractHadoop()
-deployHadoopConfig()
+deployHadoopConfig(args.role)
 
 print 'Dont forget to:\nsource ~/.bash_profile'
