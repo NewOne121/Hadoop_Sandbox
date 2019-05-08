@@ -1,0 +1,3 @@
+10.1.1.5    hadoop-namenode
+10.1.1.1    hadoop-resource-manager
+10.1.1.2    kube-datanode
